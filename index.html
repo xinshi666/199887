@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="320" name="MobileOptimized">
+    <title>官方页面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #333;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #2ecc71;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            width: 100%;
+            max-width: 900px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .card-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .card-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(106, 17, 203, 0.2);
+            border-radius: 50%;
+            border-top-color: #6a11cb;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 18px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+        
+        .error-container {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+        
+        .error-icon {
+            font-size: 64px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+        
+        .error-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .error-message {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+        
+        .content-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: none;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 12px 15px;
+            }
+            
+            .logo-text {
+                font-size: 18px;
+            }
+            
+            .card-body {
+                padding: 20px;
+            }
+            
+            .content-frame {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-cube"></i>
+            </div>
+            <div class="logo-text">官方页面</div>
+        </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            <span>安全连接已建立</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">内容加载中</div>
+                <div class="card-subtitle">请稍候，正在安全验证并加载内容</div>
+            </div>
+            <div class="card-body">
+                <div class="loading-container" id="loadingContainer">
+                    <div class="spinner"></div>
+                    <div class="loading-text">正在验证来源并加载内容...</div>
+                </div>
+                
+                <div class="error-container" id="errorContainer">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="error-title">加载失败</div>
+                    <div class="error-message" id="errorMessage">
+                        无法加载请求的内容，可能是域名不在允许列表中或链接无效。
+                    </div>
+                    <button class="btn" onclick="location.reload()">
+                        <i class="fas fa-redo"></i> 重新加载
+                    </button>
+                </div>
+                
+                <iframe class="content-frame" id="contentFrame" onload="onFrameLoad()"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>安全浏览 &copy; 2023 官方页面. 所有权利保留.</p >
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取URL参数
+            var urlParams = new URLSearchParams(window.location.search);
+            var encodedParam = urlParams.get('hy');
+            
+            if (encodedParam) {
+                try {
+                    var trueurl = atob(encodedParam);
+                    
+                    // 验证URL格式和域名
+                    if (trueurl.includes("http")) {
+                        var urlObj = new URL(trueurl);
+                        var domain = urlObj.hostname;
+                        var allowedDomains = [
+                            "731l.com", "heiye.us", "heiy.art", 
+                            "an518.cn", "heiyenb.cn"
+                        ];
+                        
+                        var isAllowed = allowedDomains.some(function(allowedDomain) {
+                            return domain === allowedDomain || domain.endsWith("." + allowedDomain);
+                        });
+                        
+                        if (isAllowed) {
+                            // 显示加载状态，设置iframe源
+                            document.getElementById('contentFrame').src = trueurl;
+                            console.log("加载URL: " + trueurl);
+                        } else {
+                            showError("域名不在允许列表中，请联系黑夜加白@hxzc_heiye");
+                        }
+                    } else {
+                        showError("URL格式无效");
+                    }
+                } catch (e) {
+                    showError("URL参数解析错误: " + e.message);
+                }
+            } else {
+                showError("未提供有效的URL参数");
+            }
+        });
+        
+        function onFrameLoad() {
+            // 隐藏加载状态，显示内容
+            document.getElementById('loadingContainer').style.display = 'none';
+            document.getElementById('contentFrame').style.display = 'block';
+            
+            try {
+                // 绑定鼠标滚轮事件到iframe内容
+                bindMouseWheel(document.getElementById('contentFrame'));
+            } catch (e) {
+                console.log("无法绑定鼠标事件: " + e.message);
+            }
+        }
+        
+        function showError(message) {
+            document.getElementById('loadingContainer').style.display = 'none';
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorContainer').style.display = 'block';
+        }
+        
+        // 原有的鼠标滚轮处理函数
+        var firefox = navigator.userAgent.indexOf('Firefox') != -1;
+        
+        function MouseWheel(e, doc) {
+            e.preventDefault && e.preventDefault();
+            e.returnValue = false;
+            var up = (firefox && e.detail < 0) || e.wheelDelta > 0;
+            doc.body.scrollTop = doc.documentElement.scrollTop += up ? -50 : 50;
+        }
+        
+        function bindMouseWheel(ifr) {
+            try {
+                var doc = ifr.contentWindow.document;
+                if (firefox) {
+                    doc.addEventListener('DOMMouseScroll', function(e) {
+                        MouseWheel(e, doc);
+                    }, false);
+                } else {
+                    doc.onmousewheel = function(e) {
+                        MouseWheel(e || ifr.contentWindow.event, doc);
+                    };
+                }
+            } catch (e) {
+                console.log('Error binding mouse wheel: ' + e);
+            }
+        }
+    </script>
+</body>
+</html>
