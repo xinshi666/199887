@@ -1,92 +1,81 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>官方页面</title>
+<title>正在访问</title>
     <style>
-        html, body {
+        /* TG:@xiaohan7723开发*/
+        body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
             overflow: hidden;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
         }
-        
-        .content {
-            position: fixed;
+        /* TG:@xiaohan7723开发 */
+        .msg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            left: 0;
-            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
-        
-        .error-tip {
-            display: none; /* 隐藏错误提示 */
+        /* TG:@xiaohan7723开发 */
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #666;
+            font-size: 16px;
         }
-        
+        .loading .icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ccc;
+            border-top-color: #666;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+        /* TG:@xiaohan7723开发 */
+        .error {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
+        .error .icon {
+            width: 48px;
+            height: 48px;
+            border: 2px solid #ff4d4f;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff4d4f;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .error .text {
+            color: #333;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .error .contact {
+            color: #666;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        /* TG:@xiaohan7723开发 */
         iframe {
+            width: 100%;
+            height: 100%;
             border: none;
-            width: 100vw;
-            height: 100vh;
+            display: none;
         }
-    </style>
-</head>
-<body>
-    <div class="error-tip"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                const encodedParam = urlParams.get('goofish');
-                
-                if (!encodedParam) {
-                    throw new Error('缺少必要参数');
-                }
-
-                const targetUrl = decodeURIComponent(atob(encodedParam));
-                if (!targetUrl.startsWith('http')) {
-                    throw new Error('无效的URL');
-                }
-
-                // 尝试从URL参数获取标题
-                const encodedTitle = urlParams.get('title');
-                if (encodedTitle) {
-                    document.title = decodeURIComponent(atob(encodedTitle));
-                }
-
-                // 立即创建并插入iframe，无任何延迟
-                const iframe = document.createElement('iframe');
-                iframe.className = 'content';
-                iframe.src = targetUrl;
-                iframe.allow = 'same-origin';
-                document.body.appendChild(iframe);
-                
-                if (iframe) {
-                    bindMouseWheel(iframe);
-                }
-            } catch (e) {
-                // 错误处理
-                document.body.textContent = '未输入正确标识';
-                console.error('加载错误:', e.message);
-            }
-        });
-
-        const isFirefox = navigator.userAgent.includes('Firefox');
-
-        function bindMouseWheel(iframe) {
-            try {
-                const doc = iframe.contentWindow.document;
-                const handleWheel = (e) => {
-                    e.preventDefault();
-                    const delta = isFirefox ? e.detail * -50 : e.wheelDelta;
-                    doc.documentElement.scrollTop += delta;
-                };
-
-                doc.addEventListener(isFirefox ? 'DOMMouseScroll' : 'wheel', handleWheel);
-            } catch (e) {
-                console.warn('鼠标滚轮事件绑定失败:', e.message);
-            }
+        /* TG:@xiaohan7723开发 */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
-    </script>
-</body>
-</html>
